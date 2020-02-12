@@ -1,0 +1,8 @@
+.root{
+-fx-background-image: url("https://media.biobiochile.cl/wp-content/uploads/2019/05/bikini-bottom.jpeg");
+-fx-background-size: cover, auto;
+}
+
+.menu-bar{
+-fx-background-color: #80cbc4
+}
