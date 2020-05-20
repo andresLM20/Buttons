@@ -1,0 +1,26 @@
+.root{
+    -fx-base: #673ab7
+}
+#btnRow{
+    -fx-pref-height: 30;
+    -fx-min-width: 40;
+}
+#btnRowGrande{
+     -fx-pref-height: 30;
+     -fx-min-width: 80;
+ }
+ #btnRowMediano{
+       -fx-pref-height: 30;
+       -fx-min-width: 70;
+   }
+#btnRowExGrande{
+        -fx-pref-height: 30;
+        -fx-min-width: 210;
+}
+#hbox-custom{
+    -fx-background-radius: 1.0;
+    -fx-padding:2;
+}
+.toolbar{
+    -fx-base: #f44336
+}
