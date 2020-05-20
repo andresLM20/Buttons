@@ -8,7 +8,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.Buscaminas.Buscaminas;
-import sample.Buscaminas2.Buscaminas2;
 import sample.Modelos.Conexion;
 import sample.Taqueria.TaqueriaPrincipal;
 import sample.Vistas.*;
