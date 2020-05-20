@@ -1,0 +1,52 @@
+create database taqueria;
+use taqueria;
+create table tbl_mesa(
+	idMesa int auto_increment,
+	CONSTRAINT PK_Cliente PRIMARY KEY(idMesa)
+);
+create table tbl_empleado(
+	idEmp int auto_increment,
+	nomEmp varchar(30),
+	apPatEmp varchar(20),
+	apMatEmp varchar(20),
+	CONSTRAINT PK_Empleado PRIMARY KEY(idEmp)
+);
+create table tbl_pedido(
+	idPed int auto_increment,
+	fechaPed datetime,
+	idEmp int,
+	idMesa int,
+	CONSTRAINT PK_Pedido PRIMARY KEY(idPed),
+	CONSTRAINT FK_Pedido1 FOREIGN KEY(IdEmp) references tbl_empleado(idEmp),
+	CONSTRAINT FK_Pedido2 FOREIGN KEY(idMesa) references tbl_mesa(idMesa)
+);
+create table tbl_ticket(
+	idTicket int auto_increment,
+	fechaTicket datetime,
+	importe int,
+	idPed int,
+	CONSTRAINT PK_Ticket PRIMARY KEY(idTicket),
+	CONSTRAINT FK_Ticket FOREIGN KEY(idPed) references tbl_pedido(idPed)
+);
+create table tbl_categoriaAli(
+	idCat int auto_increment,
+	nomCat varchar(20),
+	CONSTRAINT PK_catAli PRIMARY KEY(idCat)
+);
+create table tbl_alimentos(
+	idAlimento int auto_increment,
+	nombreAli varchar(30),
+	descAli varchar(100),
+	precioAli int,
+	idCat int,
+	CONSTRAINT PK_Alimentos PRIMARY KEY(idAlimento),
+	CONSTRAINT FK_Alimentos FOREIGN KEY(idCat) references tbl_categoriaAli(idCat)
+);
+create table tbl_Tiene(
+	idPed int auto_increment,
+	idAlimento int,
+	CONSTRAINT PK_Tiene PRIMARY KEY(idPed,idAlimento),
+	CONSTRAINT FK_Tiene1 FOREIGN KEY(idPed) references tbl_pedido(idPed),
+	CONSTRAINT FK_Tiene2 FOREIGN KEY(idAlimento) references tbl_alimentos(idAlimento)
+);
+
