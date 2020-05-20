@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/BD Taqueria.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Taqueria/TaqueriaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Taqueria/TaqueriaPrincipal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -399,10 +399,10 @@
     </state>
     <state x="190" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1581474278046" />
     <state x="190" y="0" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1589496801527" />
-    <state x="390" y="192" key="com.intellij.ide.util.TipDialog" timestamp="1585865172281">
-      <screen x="0" y="0" width="1366" height="736" />
+    <state x="390" y="190" key="com.intellij.ide.util.TipDialog" timestamp="1590011143448">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="390" y="190" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1583449578606" />
+    <state x="390" y="190" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1590011143448" />
     <state x="390" y="192" key="com.intellij.ide.util.TipDialog/0.0.1366.736/1366.0.1280.690@0.0.1366.736" timestamp="1585692283778" />
     <state x="390" y="192" key="com.intellij.ide.util.TipDialog/0.0.1366.736@0.0.1366.736" timestamp="1585865172281" />
     <state x="339" y="159" key="run.anything.popup" timestamp="1589668964498">
