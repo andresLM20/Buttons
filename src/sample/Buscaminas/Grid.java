@@ -21,10 +21,14 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import sample.Eventos.EventoBuscar;
 
 import javax.swing.*;
+import java.io.RandomAccessFile;
 
 public class Grid extends Parent{
+    int TR = 0;
+    RandomAccessFile minaArchivo;
     int countColumn;
     int countRow;
     int countBomb;
@@ -168,7 +172,6 @@ public class Grid extends Parent{
         getChildren().add(vboxLayout);
 
         instalarJuego();
-        Reiniciar();
     }
 
     private void Reiniciar(){
@@ -181,20 +184,52 @@ public class Grid extends Parent{
     }
 
     private void instalarJuego(){
-        int random_row,random_col,tempCountBomb;
-        tempCountBomb = (int)((countColumn * countRow * 25.0)/100);
-        //System.out.println(tempCountBomb);   //numero de bombas totales
-
-
-
-
-
-
-        for (int i = 0; i < tempCountBomb; i++) {  //Pone las bombas aleatoriamente
-            random_row=(int) (Math.random()*countRow);
-            random_col=(int) (Math.random()*countColumn);
-            Celda[random_row][random_col].setBombBox(true);
+        int random_row,random_col,numeroMinas;
+        try{
+            minaArchivo = new RandomAccessFile("Buscaminas.dat", "rw");
+            TR=0;
+            int minas = 0;
+            byte minita = 0;
+            for (int i = 0; i < countRow; i++) {
+                for (int j = 0; j < countColumn ; j++) {
+                    minaArchivo.seek(TR);
+                    double random = Math.random();
+                    if(random < 0.25){
+                        minita = 1;
+                    }else{
+                        minita = 0;
+                    }
+                    minaArchivo.write(minita);
+                    System.out.println(minaArchivo.getFilePointer()+", MINITA: "+minita);
+                    TR++;
+                }
+            }
+            System.out.println("Archivo creado exitosamente!");
+            minaArchivo.seek(0);
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        //**************************************************************************************************
+        TR=0;
+        try {
+            System.out.println("ENTRA A MINAS");
+            for (int i = 0; i < countRow; i++) {
+                for (int j = 0; j < countColumn ; j++) {
+                    minaArchivo = new RandomAccessFile("Buscaminas.dat","rw");
+                    minaArchivo.seek(TR);
+                    int minaBool = minaArchivo.read();
+                    System.out.println(minaBool);
+                    if(minaBool == 1)
+                        Celda[i][j].setBombBox(true);
+                    TR++;
+                }
+            }
+            System.out.println("SALE A MINAS");
+            minaArchivo.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //**************************************************************************************************
 
         countBomb=0;
         for (int i = 0; i < countRow; i++) {
