@@ -41,11 +41,10 @@ public class Grid extends Parent{
         public Contenedor() {
             Text lblminasRestantes = new Text("Minas Marcadas:");
             HBox hBox = new HBox(10);
-            btnRestart.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
+            btnRestart.setOnAction(event -> {
                     Reiniciar();
                     juegoFinalizado=false;
-                }
+
             });
             hBox.getChildren().addAll(btnRestart,lblminasRestantes,minasRestantes);
             this.getChildren().add(hBox);
@@ -182,13 +181,8 @@ public class Grid extends Parent{
 
     private void instalarJuego(){
         int random_row,random_col,tempCountBomb;
-        tempCountBomb = (int)((countColumn * countRow * 25.0)/100);
+        tempCountBomb = (int)((countColumn * countRow * 0.25));
         //System.out.println(tempCountBomb);   //numero de bombas totales
-
-
-
-
-
 
         for (int i = 0; i < tempCountBomb; i++) {  //Pone las bombas aleatoriamente
             random_row=(int) (Math.random()*countRow);
@@ -261,7 +255,7 @@ class Box extends Parent{
 
     public Box(int width,int height){
         rectBox=new Rectangle(width,height);
-        rectBox.setFill(Color.GRAY);
+        rectBox.setFill(Color.RED);
 
         rectText=new Text(width/2,height/2,(new Integer(bomb_count)).toString());
         rectText.setFill(Color.BLACK);

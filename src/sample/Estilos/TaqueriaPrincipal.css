@@ -1,8 +1,10 @@
 .root{
-    -fx-base: #ff6e40
+   -fx-background-image: url("src/sample/Imagenes/El tacochino.png");
+   -fx-background-size: cover, auto;
 }
 
 #HBoxP{
+
     -fx-pref-height: 30;
     -fx-min-width: 40;
     -fx-background-radius: 1.0;

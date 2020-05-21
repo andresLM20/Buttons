@@ -37,11 +37,10 @@ public class TaqueriaPrincipal extends Stage {
     public HBox HBoxP1 = new HBox();
     public VBox VBoxP1 = new VBox();
 
-    public Label titulo = new Label("TAQUERIA 'LOS TUSA'");
 
     public TaqueriaPrincipal(){
         CrearGUI();
-        this.setTitle("Taqueria 'Los helados'");
+        this.setTitle("Taqueria 'El taco chinito'");
         this.setScene(escena);
         this.show();
     }
@@ -62,7 +61,7 @@ public class TaqueriaPrincipal extends Stage {
         ConstruirVistaEmpleado();
         ConstruirVistaAdmin();
 
-        escena = new Scene(ParentStack, 700, 400);
+        escena = new Scene(ParentStack, 700, 500);
         escena.getStylesheets().add("sample/Estilos/TaqueriaPrincipal.css");
 
         btnTaco.setOnAction(event -> Info());
@@ -90,9 +89,9 @@ public class TaqueriaPrincipal extends Stage {
         btnScEmp.setPrefSize(200,100);
         btnScAdmin.setPrefSize(200,100);
         HBoxP1.getChildren().addAll(btnTaco,VBoxP1);
-        VBoxPrincipal.getChildren().addAll(titulo,HBoxP1);
+        VBoxPrincipal.getChildren().addAll(HBoxP1);
         VBoxPrincipal.setAlignment(Pos.CENTER);
-        HBoxP1.setAlignment(Pos.CENTER);
+        HBoxP1.setAlignment(Pos.CENTER_RIGHT);
         btnTaco.setId("ButtonTaco");
     }
 
