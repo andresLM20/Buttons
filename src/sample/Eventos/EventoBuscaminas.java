@@ -48,7 +48,7 @@ public class EventoBuscaminas implements EventHandler{
                 int quedantes = total - (i+1);
                 double valor = Math.random();
                 byte minado = 0;
-                if (valor < 0.5) {
+                if (valor < 0.25) {
                     if(numMina == porcentajeMinado){
                         //minado=1;
                     }else {

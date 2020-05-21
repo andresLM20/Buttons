@@ -37,7 +37,7 @@ public class TaqueriaPrincipal extends Stage {
     public HBox HBoxP1 = new HBox();
     public VBox VBoxP1 = new VBox();
 
-    public Label titulo = new Label("TAQUERIA 'LOS HELADOS'");
+    public Label titulo = new Label("TAQUERIA 'LOS TUSA'");
 
     public TaqueriaPrincipal(){
         CrearGUI();
