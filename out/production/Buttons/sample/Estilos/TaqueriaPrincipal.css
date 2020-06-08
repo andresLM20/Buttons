@@ -1,15 +1,16 @@
 .root{
-   -fx-background-image: url("src/sample/Imagenes/El tacochino.png");
+
+   -fx-background-image: url("jetbrains://idea/navigate/reference?project=TopicosPracticas&path=sample/Imagenes/tacos2.png");
    -fx-background-size: cover, auto;
 }
 
 #HBoxP{
-
     -fx-pref-height: 30;
     -fx-min-width: 40;
     -fx-background-radius: 1.0;
      -fx-padding:2;
 }
+
 #ButtonTaco{
     -fx-pref-height: 30;
     -fx-min-width: 40;
