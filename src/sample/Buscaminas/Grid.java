@@ -1,5 +1,4 @@
 package sample.Buscaminas;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -35,34 +34,8 @@ public class Grid extends Parent{
     int banderas=0;
     Box[][] Celda;
     VBox vboxLayout;
-    Contenedor Contenedor;
     boolean juegoFinalizado = false;
 
-    private class Contenedor extends Parent{
-        Text minasRestantes = new Text();
-        Button btnRestart = new Button("REINICIAR PARTIDA");
-
-        public Contenedor() {
-            Text lblminasRestantes = new Text("Minas Marcadas:");
-            HBox hBox = new HBox(10);
-            btnRestart.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    Reiniciar();
-                    juegoFinalizado=false;
-                }
-            });
-            hBox.getChildren().addAll(btnRestart,lblminasRestantes,minasRestantes);
-            this.getChildren().add(hBox);
-            hBox.setAlignment(Pos.CENTER);
-            //hBox.prefHeight(0);
-            //hBox.minHeight(100);
-            hBox.setFillHeight(true);
-        }
-
-        public void ponerMinas(int minasR){
-            minasRestantes.setText(Integer.toString(minasR));
-        }
-    }
     //****************************************************************************************************************
 
     private void mostrarMinas(Box CeldaClicked) {
@@ -121,15 +94,14 @@ public class Grid extends Parent{
         countColumn=columns;
         countRow=rows;
         Celda=new Box[countRow][countColumn];
-        Contenedor = new Contenedor();
+
         vboxLayout = new VBox(5);
-        vboxLayout.getChildren().add(Contenedor);
         //vboxLayout.setAlignment(Pos.TOP_CENTER);
 
         for (int i = 0; i < countRow; i++) {
             HBox hboxLayout=new HBox(2);
             for (int j = 0; j < columns; j++) {
-                Celda[i][j]=new Box(35,35);
+                Celda[i][j]=new Box(50,50);
                 Celda[i][j].setBoxPosition(i,j);
                 Celda[i][j].setOnMouseClicked(new EventHandler<MouseEvent>(){
                     public void handle(MouseEvent event) {
@@ -159,7 +131,6 @@ public class Grid extends Parent{
                         }else if(event.getButton()==MouseButton.SECONDARY){
                             CeldaClicked.ponerBandera(!CeldaClicked.bandera());
                             banderas=CeldaClicked.tieneBandera?banderas+1:banderas-1;
-                            Contenedor.ponerMinas(countBomb-banderas);
                             revisarBombasconBand();
                         }
                     }
@@ -174,17 +145,9 @@ public class Grid extends Parent{
         instalarJuego();
     }
 
-    private void Reiniciar(){
-        for (int i = 0; i < countRow; i++) {
-            for (int j = 0; j < countColumn; j++) {
-                Celda[i][j].reiniciarCelda();
-            }
-        }
-        instalarJuego();
-    }
 
     private void instalarJuego(){
-        int random_row,random_col,numeroMinas;
+        //Implementación de los archivos para minar campo./////////////////////////
         try{
             minaArchivo = new RandomAccessFile("Buscaminas.dat", "rw");
             TR=0;
@@ -204,15 +167,11 @@ public class Grid extends Parent{
                     TR++;
                 }
             }
-            System.out.println("Archivo creado exitosamente!");
+
             minaArchivo.seek(0);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        //**************************************************************************************************
+        }catch(Exception e){ e.printStackTrace();}
         TR=0;
         try {
-            System.out.println("ENTRA A MINAS");
             for (int i = 0; i < countRow; i++) {
                 for (int j = 0; j < countColumn ; j++) {
                     minaArchivo = new RandomAccessFile("Buscaminas.dat","rw");
@@ -229,7 +188,6 @@ public class Grid extends Parent{
         }catch (Exception e){
             e.printStackTrace();
         }
-        //**************************************************************************************************
 
         countBomb=0;
         for (int i = 0; i < countRow; i++) {
@@ -239,7 +197,6 @@ public class Grid extends Parent{
         }
 
         banderas=0;
-        Contenedor.ponerMinas(countBomb - banderas);
 
         int bomb_count=0;
         for (int i = 0; i < countRow; i++) {
@@ -281,24 +238,24 @@ public class Grid extends Parent{
 }
 
 
-class Box extends Parent{
-    Rectangle rectBox ;
+class Box extends Parent {
+    Rectangle rectBox;
     Text rectText;
-    boolean isBomb=false;
-    int bomb_count=0;
-    int posRow , posCol;
-    boolean estaCubierta=true;
-    boolean tieneBandera=false;
-    ImageView banderita=null;
-    ImageView bombita=null;
-    Group grp=new Group();
+    boolean isBomb = false;
+    int bomb_count = 0;
+    int posRow, posCol;
+    boolean estaCubierta = true;
+    boolean tieneBandera = false;
+    ImageView banderita = null;
+    ImageView bombita = null;
+    Group grp = new Group();
 
 
-    public Box(int width,int height){
-        rectBox=new Rectangle(width,height);
-        rectBox.setFill(Color.GRAY);
+    public Box(int width, int height) {
+        rectBox = new Rectangle(width, height);
+        rectBox.setFill(Color.grayRgb(50));
 
-        rectText=new Text(width/2,height/2,(new Integer(bomb_count)).toString());
+        rectText = new Text(width / 2, height / 2, (new Integer(bomb_count)).toString());
         rectText.setFill(Color.BLACK);
         rectText.setVisible(false);
 
@@ -306,74 +263,63 @@ class Box extends Parent{
         getChildren().add(grp);
     }
 
-    public void reiniciarCelda(){
-        isBomb=false;
-        bomb_count=0;
-        estaCubierta=true;
-        tieneBandera=false;
-        rectBox.setFill(Color.GRAY);
-        rectText.setFill(Color.BLACK);
-        rectText.setVisible(false);
-
-        grp.getChildren().remove(rectText);
-        grp.getChildren().remove(bombita);
-        grp.getChildren().remove(banderita);
-
-    }
-
-    void setBombBox(boolean isBomb){
-        if(!this.isBomb && isBomb){
-            this.isBomb=isBomb;
+    void setBombBox(boolean isBomb) {
+        if (!this.isBomb && isBomb) {
+            this.isBomb = isBomb;
             bombita = new ImageView(new Image("sample/Buscaminas/images/imgBomb.png"));
             bombita.setFitWidth(rectBox.getWidth());
             bombita.setFitHeight(rectBox.getHeight());
             bombita.setVisible(false);
             grp.getChildren().add(bombita);
-        }else if(this.isBomb && !isBomb){
+        } else if (this.isBomb && !isBomb) {
             getChildren().remove(bombita);
         }
     }
 
-    void setBoxPosition(int row_position,int col_position){
-        posRow=row_position;
-        posCol=col_position;
+    void setBoxPosition(int row_position, int col_position) {
+        posRow = row_position;
+        posCol = col_position;
     }
 
-    int getBoxRow(){ return posRow; }
-
-    int getBoxCol(){ return posCol; }
-
-    void setBombCount(int bomb_count){
-        this.bomb_count=bomb_count;
+    int getBoxRow() {
+        return posRow;
     }
 
-    void showBombCount(){
-        if(!rectText.isVisible() && !isBomb ){
+    int getBoxCol() {
+        return posCol;
+    }
+
+    void setBombCount(int bomb_count) {
+        this.bomb_count = bomb_count;
+    }
+
+    void showBombCount() {
+        if (!rectText.isVisible() && !isBomb) {
             ponerBandera(false);
             rectText.setText((new Integer(bomb_count).toString()));
             grp.getChildren().add(rectText);
             rectText.setVisible(true);
-            estaCubierta=false;
+            estaCubierta = false;
         }
     }
 
-    void ponerCubierta(boolean estaCubierta){
-        this.estaCubierta=estaCubierta;
-            rectBox.setFill(Color.LIGHTGRAY);
+    void ponerCubierta(boolean estaCubierta) {
+        this.estaCubierta = estaCubierta;
+        rectBox.setFill(Color.WHITE); //Color Descubierto
     }
 
-    boolean estaCubierta(){
+    boolean estaCubierta() {
         return estaCubierta;
     }
 
-    boolean tieneBomba(){
+    boolean tieneBomba() {
         return isBomb;
     }
 
-    void explotarBomba(){
-        if(isBomb){
+    void explotarBomba() {
+        if (isBomb) {
             bombita.setVisible(true);
-            if(tieneBandera) banderita.setVisible(false);
+            if (tieneBandera) banderita.setVisible(false);
             bombita.setImage(new Image(Grid.class.getResourceAsStream("images/imgExplosion.png")));
         }
     }
@@ -387,17 +333,17 @@ class Box extends Parent{
     }
 
     void ponerBandera(boolean tieneBandera) {
-        if(estaCubierta){
-            this.tieneBandera=tieneBandera;
-            if(tieneBandera){
+        if (estaCubierta) {
+            this.tieneBandera = tieneBandera;
+            if (tieneBandera) {
                 banderita = new ImageView(new Image(Grid.class.getResourceAsStream("images/imgRedFlag.png")));
                 banderita.setFitHeight(rectBox.getHeight());
                 banderita.setFitWidth(rectBox.getWidth());
                 banderita.setVisible(tieneBandera);
                 grp.getChildren().add(banderita);
-            }else{
+            } else {
                 grp.getChildren().remove(banderita);
-                banderita=null;
+                banderita = null;
             }
         }
     }

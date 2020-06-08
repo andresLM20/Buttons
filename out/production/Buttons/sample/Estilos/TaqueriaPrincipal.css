@@ -1,5 +1,7 @@
 .root{
-    -fx-base: #ff6e40
+
+   -fx-background-image: url("jetbrains://idea/navigate/reference?project=TopicosPracticas&path=sample/Imagenes/tacos2.png");
+   -fx-background-size: cover, auto;
 }
 
 #HBoxP{
@@ -8,6 +10,7 @@
     -fx-background-radius: 1.0;
      -fx-padding:2;
 }
+
 #ButtonTaco{
     -fx-pref-height: 30;
     -fx-min-width: 40;

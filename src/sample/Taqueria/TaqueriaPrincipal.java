@@ -37,11 +37,10 @@ public class TaqueriaPrincipal extends Stage {
     public HBox HBoxP1 = new HBox();
     public VBox VBoxP1 = new VBox();
 
-    public Label titulo = new Label("TAQUERIA 'LOS TUSA'");
 
     public TaqueriaPrincipal(){
         CrearGUI();
-        this.setTitle("Taqueria 'Los helados'");
+        this.setTitle("Taqueria 'El taco chinito'");
         this.setScene(escena);
         this.show();
     }
@@ -62,7 +61,7 @@ public class TaqueriaPrincipal extends Stage {
         ConstruirVistaEmpleado();
         ConstruirVistaAdmin();
 
-        escena = new Scene(ParentStack, 700, 400);
+        escena = new Scene(ParentStack, 700, 500);
         escena.getStylesheets().add("sample/Estilos/TaqueriaPrincipal.css");
 
         btnTaco.setOnAction(event -> Info());
@@ -76,8 +75,15 @@ public class TaqueriaPrincipal extends Stage {
     }
 
     private void ConstruirVistaEmpleado() {
-        Label MostrarEmp = new Label("Esta es la \nvista Empleado");
-        VBoxEmpleado.getChildren().addAll(MostrarEmp);
+        btnOrden = new Button("Ordenes");
+        btnOrden.setPrefSize(120,50);
+        btnGestPed = new Button("Gestionar pedido");
+        btnGestPed.setPrefSize(120,50);
+        btnFinPed = new Button("Finalizar pedido");
+        btnFinPed.setPrefSize(120,50);
+        btnVolver = new Button("Regresar");
+        btnVolver.setPrefSize(120,50);
+        VBoxEmpleado.getChildren().addAll(btnOrden, btnGestPed, btnFinPed, btnVolver);
     }
 
     private void ConstruirVistaPrincipal() {
@@ -87,12 +93,12 @@ public class TaqueriaPrincipal extends Stage {
         btnTaco.setGraphic(tacoImg);
         VBoxP1.getChildren().addAll(btnScEmp,btnScAdmin);
         btnTaco.setPrefSize(200,200);
-        btnScEmp.setPrefSize(200,100);
-        btnScAdmin.setPrefSize(200,100);
+        btnScEmp.setPrefSize(200,105);
+        btnScAdmin.setPrefSize(200,105);
         HBoxP1.getChildren().addAll(btnTaco,VBoxP1);
-        VBoxPrincipal.getChildren().addAll(titulo,HBoxP1);
+        VBoxPrincipal.getChildren().addAll(HBoxP1);
         VBoxPrincipal.setAlignment(Pos.CENTER);
-        HBoxP1.setAlignment(Pos.CENTER);
+        HBoxP1.setAlignment(Pos.CENTER_RIGHT);
         btnTaco.setId("ButtonTaco");
     }
 

@@ -23,13 +23,12 @@ public class InfoVentana extends Stage {
     }
 
     private void CrearGUI() {
-        Label LblInfo = new Label("Programa elaborado por:\nAndrés Morales Martínez.\n\nPara la materia de:\nTópicos Avanzados de Programación.");
+        Label LblInfo = new Label("Programa elaborado por:\nAndrés Morales Martínez.\nJuan Manuel Romero Perez \n\nPara la materia de:\nTópicos Avanzados de Programación.");
         LblInfo.setTextAlignment(TextAlignment.CENTER);
         LblInfo.setFont(Font.font("Verdana", FontWeight.BOLD,12));
         VBoxInfo.getChildren().add(LblInfo);
         VBoxInfo.setAlignment(Pos.CENTER);
         VBoxInfo.setPrefSize(100,100);
         escenaInfo = new Scene(VBoxInfo, 300, 300);
-        escenaInfo.getStylesheets().add("sample/Estilos/TaqueriaPrincipal.css");
     }
 }
