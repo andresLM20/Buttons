@@ -4,14 +4,19 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import sample.Modelos.ProductosDAO;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn;
+import sample.Taqueria.PedidosDAO;
+
+import java.sql.Date;
 
 public class TaqueriaPrincipal extends Stage {
 
@@ -21,7 +26,6 @@ public class TaqueriaPrincipal extends Stage {
     public Button btnGestPed = new Button("Gestionar Pedido");
     public Button btnFinPed = new Button("Finalizar Pedido/Ticket");
     public Button btnEmps = new Button("Empleados");
-    public Button btnClientes = new Button("Clientes");
     public Button btnCatAli = new Button("Categorias de Alimentos");
     public Button btnAlim = new Button("Alimentos");
     public Button btnTaco = new Button();
@@ -29,13 +33,22 @@ public class TaqueriaPrincipal extends Stage {
     public Button btnScAdmin = new Button("Administrador");
     public Button btnVolver = new Button("Volver");
 
+    private TableView <PedidosDAO>tbvPedidos;
+    private PedidosDAO objP;
+
     public VBox VBoxParent = new VBox();
     public VBox VBoxPrincipal = new VBox();
     public VBox VBoxEmpleado = new VBox();
     public VBox VBoxAdmin = new VBox();
 
+    public Button btnIngresarAdmin;
+    public TextField txtUsuario = new TextField();
+    public TextField txtPass = new TextField();
+    public Label lblTitle = new Label("PEDIDOS");
+
     public HBox HBoxP1 = new HBox();
     public VBox VBoxP1 = new VBox();
+
 
 
     public TaqueriaPrincipal(){
@@ -70,20 +83,86 @@ public class TaqueriaPrincipal extends Stage {
     }
 
     private void ConstruirVistaAdmin() {
-        Label MostrarAdmin = new Label("Esta es la \nvista Admin");
-        VBoxAdmin.getChildren().addAll(MostrarAdmin);
+        txtUsuario.setPromptText("Ingrese usuario");
+        txtUsuario.setPrefSize(120,50);
+        txtPass.setPromptText("Ingrese contraseña");
+        txtPass.setPrefSize(120,50);
+        btnIngresarAdmin = new Button("Acceder");
+        btnIngresarAdmin.setPrefSize(120,50);
+        btnVolver = new Button("Regresar");
+        btnVolver.setPrefSize(120,50);
+        btnVolver.setOnAction(event -> {
+            this.close();
+            new TaqueriaPrincipal();
+        });
+
+        VBoxAdmin.getChildren().addAll(txtUsuario,txtPass,btnIngresarAdmin,btnVolver);
+        btnIngresarAdmin.setOnAction(event -> {
+            if(txtUsuario.getText().equals("admin")&&txtPass.getText().equals("admin")){
+                this.close();
+                new Administrador();
+            }else{
+                txtUsuario.setText("");
+                txtPass.setText("");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("ERROR");
+                alert.setHeaderText("Datos incorrectos");
+                alert.setContentText("Por favor, ingrese el usuario y contraseña correctos");
+                alert.showAndWait();
+            }
+        });
+
     }
 
     private void ConstruirVistaEmpleado() {
+        tbvPedidos = new TableView<>();
+        objP = new PedidosDAO();
+
         btnOrden = new Button("Ordenes");
         btnOrden.setPrefSize(120,50);
-        btnGestPed = new Button("Gestionar pedido");
-        btnGestPed.setPrefSize(120,50);
-        btnFinPed = new Button("Finalizar pedido");
+//        btnOrden.setOnAction(event -> {
+//            new frOrden(tbvPedidos,null);
+//        });
+        btnFinPed = new Button(("Pedido"));
         btnFinPed.setPrefSize(120,50);
+        btnFinPed.setOnAction(event -> {
+            new frmPedido(tbvPedidos,null);
+        });
+
         btnVolver = new Button("Regresar");
         btnVolver.setPrefSize(120,50);
-        VBoxEmpleado.getChildren().addAll(btnOrden, btnGestPed, btnFinPed, btnVolver);
+        btnVolver.setOnAction(event -> {
+            close();
+            new TaqueriaPrincipal();
+        });
+        lblTitle.setAlignment(Pos.CENTER_LEFT);
+        VBox VboxLabel = new VBox();
+        VboxLabel.getChildren().addAll(lblTitle);
+        VboxLabel.setAlignment(Pos.CENTER_LEFT);
+        lblTitle.setFont(Font.font("Verdana", FontWeight.BOLD,20));
+        VBoxEmpleado.getChildren().addAll(VboxLabel,tbvPedidos,btnFinPed,btnOrden, btnVolver);
+        VBoxEmpleado.setAlignment(Pos.CENTER_RIGHT);
+    }
+
+    private void CrearTabla(){
+
+        TableColumn<PedidosDAO,Integer> tbcIdPedido = new TableColumn<>("ID");
+        tbcIdPedido.setCellValueFactory(new PropertyValueFactory<>("idPed"));
+
+        TableColumn<PedidosDAO, Date> tbcfechaPed = new TableColumn<>("Fecha");
+        tbcfechaPed.setCellValueFactory(new PropertyValueFactory<>("fechaPed"));
+
+        TableColumn<PedidosDAO,Integer> tbcIdEmp = new TableColumn<>("Empleado");
+        tbcIdEmp.setCellValueFactory(new PropertyValueFactory<>("nomEmp"));
+
+        TableColumn<PedidosDAO,Integer> tbcIdMesa = new TableColumn<>("Mesa");
+        tbcIdMesa.setCellValueFactory(new PropertyValueFactory<>("idMesa"));
+
+        TableColumn<PedidosDAO,String> tbcnomAli = new TableColumn<>("Alimento");
+        tbcnomAli.setCellValueFactory(new PropertyValueFactory<>("nombreAli"));
+
+         tbvPedidos.getColumns().addAll(tbcIdPedido, tbcfechaPed, tbcIdEmp,tbcIdMesa, tbcnomAli);
+         tbvPedidos.setItems(objP.selAllPedido());
     }
 
     private void ConstruirVistaPrincipal() {
@@ -99,6 +178,10 @@ public class TaqueriaPrincipal extends Stage {
         VBoxPrincipal.getChildren().addAll(HBoxP1);
         VBoxPrincipal.setAlignment(Pos.CENTER);
         HBoxP1.setAlignment(Pos.CENTER_RIGHT);
+        VBoxEmpleado.setVisible(false);
+        VBoxAdmin.setVisible(false);
+        btnScAdmin.setId("btnPTaco");
+        btnScEmp.setId(("btnPTaco"));
         btnTaco.setId("ButtonTaco");
     }
 
@@ -112,6 +195,7 @@ public class TaqueriaPrincipal extends Stage {
         VBoxPrincipal.setVisible(false);
         VBoxEmpleado.setVisible(true);
         VBoxAdmin.setVisible(false);
+        CrearTabla();
     }
 
     private void Info() {
