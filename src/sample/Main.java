@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.Buscaminas.Buscaminas;
 import sample.Modelos.Conexion;
+import sample.Taqueria.ConexionTaqueria;
 import sample.Taqueria.TaqueriaPrincipal;
 import sample.Vistas.*;
 
@@ -59,6 +60,7 @@ public class Main extends Application{
 
         //Creamos la conexion
         Conexion.CrearConexion();
+        ConexionTaqueria.CrearConexion();
 
 //        final URL resource = getClass().getResource("tusa.wav");
 //        final Media media = new Media(resource.toString());

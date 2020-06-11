@@ -1,7 +1,7 @@
 .root{
--fx-background-image: url("https://i1.wp.com/www.slang.fm/wp-content/uploads/2020/02/newproject_441_original.jpg?fit=1280%2C720&ssl=1");
--fx-background-size: cover, auto;
-}
+ -fx-background-image: url("https://i1.wp.com/www.slang.fm/wp-content/uploads/2020/02/newproject_441_original.jpg?fit=1280%2C720&ssl=1");
+ -fx-background-size: cover, auto;
+ }
 
 .menu-bar{
 -fx-background-color: #9575cd

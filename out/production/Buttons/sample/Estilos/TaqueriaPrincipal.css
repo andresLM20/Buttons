@@ -1,6 +1,6 @@
 .root{
 
-   -fx-background-image: url("jetbrains://idea/navigate/reference?project=TopicosPracticas&path=sample/Imagenes/tacos2.png");
+   -fx-background-image: url("https://1.bp.blogspot.com/-DHS4YsERf7g/Xt7CkHKCtZI/AAAAAAAAVZc/ZUu1NBPUJj8Q0aaCf2clljXBgFSwGRdlwCK4BGAsYHg/w945-h600-p-k-no-nu/tacochinito.png");
    -fx-background-size: cover, auto;
 }
 
@@ -14,4 +14,9 @@
 #ButtonTaco{
     -fx-pref-height: 30;
     -fx-min-width: 40;
+    -fx-base: #b2ff59;
+}
+
+#btnPTaco{
+    -fx-base: #b2ff59;
 }
