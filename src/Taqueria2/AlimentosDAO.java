@@ -2,7 +2,7 @@ package sample.Taqueria;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.Modelos.Conexion;
+import sample.Taqueria.ConexionTaqueria;
 import sample.Modelos.ProductosDAO;
 
 import java.sql.Connection;
@@ -110,7 +110,26 @@ public class AlimentosDAO {
         }
         return listaAlimentos;
     }
+    public void getAliById(){
+        String query = "select * from tbl_alimentos where IdAlimento ="+idAlimento;
+        try{
+            Statement stmt = ConexionTaqueria.con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            if(res.next()){
+                nombreAli = res.getString("nombreAli");
+                descAli = res.getString("descAli");
+                precioAli = res.getInt("precioAli");
+                idCat = res.getInt("idCat");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public String toString() {
+        return nombreAli + "-"+"$"+precioAli;
+    }
 
 
     /*public ObservableList<ProductosDAO> selByIdProducto(){

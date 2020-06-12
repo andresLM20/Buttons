@@ -3,6 +3,7 @@ package sample.Taqueria;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Taqueria.ConexionTaqueria;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -111,7 +112,7 @@ public class PedidosDAO {
     public ObservableList<PedidosDAO> selAllPedido() {
         ObservableList<PedidosDAO> listaPedidos = FXCollections.observableArrayList();
         PedidosDAO objP = null;
-        String query = "select p.idPed,fechaPed,nomEmp,idMesa,nombreAli from ((tbl_pedido p join tbl_Tiene t on p.idPed = t.idPed) join tbl_alimentos a on t.idAlimento = a.idAlimento) join tbl_empleado e on p.idEmp = e.idEmp";
+        String query = "select p.idPed,fechaPed,nomEmp,idMesa,nombreAli from ((tbl_pedido p left join tbl_Tiene t on p.idPed = t.idPed) left join tbl_alimentos a on t.idAlimento = a.idAlimento) join tbl_empleado e on p.idEmp = e.idEmp order by p.idPed";
         try {
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery(query);
@@ -129,6 +130,47 @@ public class PedidosDAO {
             e.printStackTrace();
         }
         return listaPedidos;
+    }
+    public ObservableList<PedidosDAO> selAllPedidosItem() {
+        ObservableList<PedidosDAO> listaPedidos = FXCollections.observableArrayList();
+        PedidosDAO objP = null;
+        String query = "select * from tbl_pedido order by idPed";
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                objP = new PedidosDAO();
+                objP.setIdPed(res.getInt("idPed"));
+                objP.setFechaPed(res.getString("fechaPed"));
+                objP.setIdEmp(res.getInt("idEmp"));
+                objP.setIdMesa(res.getInt("idMesa"));
+
+                listaPedidos.add(objP);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaPedidos;
+    }
+
+    public void getPedidosById(){
+        String query = "select * from tbl_pedido where IdPed ="+idPed;
+        try{
+            Statement stmt = ConexionTaqueria.con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            if(res.next()){
+                fechaPed = res.getString("fechaPed");
+                idEmp = res.getInt("idEmp");
+                idMesa = res.getInt("idMesa");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido: "+idPed + ", mesa: "+idMesa;
     }
 }
 
